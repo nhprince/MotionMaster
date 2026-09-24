@@ -3,50 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motion Maste</title>
+    <title>Motion Master | Physics Calculator</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="scrpt.js">
-    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Motion Master</h1>
+        <div class="header">
+            <h1>🚀 Motion Master</h1>
+            <p>Calculate motion parameters effortlessly</p>
+        </div>
+        
         <form id="motionForm">
-            <div class="form-group">
-                <label for="initialVelocity">Initial Velocity (m/s)</label>
-                <input type="number" id="initialVelocity" placeholder="Velocity at the start of motion [m/s]">
+            <div class="input-grid">
+                <div class="form-group">
+                    <label for="initialVelocity">Initial Velocity (m/s)</label>
+                    <input type="number" id="initialVelocity" step="any" placeholder="Start velocity [m/s]">
+                </div>
+                <div class="form-group">
+                    <label for="finalVelocity">Final Velocity (m/s)</label>
+                    <input type="number" id="finalVelocity" step="any" placeholder="End velocity [m/s]">
+                </div>
+                <div class="form-group">
+                    <label for="acceleration">Acceleration (m/s²)</label>
+                    <input type="number" id="acceleration" step="any" placeholder="Rate of change [m/s²]">
+                </div>
+                <div class="form-group">
+                    <label for="time">Time (s)</label>
+                    <input type="number" id="time" step="any" placeholder="Duration [s]">
+                </div>
+                <div class="form-group full-width">
+                    <label for="displacement">Displacement (m)</label>
+                    <input type="number" id="displacement" step="any" placeholder="Distance traveled [m]">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="finalVelocity">Final Velocity (m/s)</label>
-                <input type="number" id="finalVelocity" placeholder="Velocity at the end of motion [m/s]">
+
+            <!-- Custom Styled Dropdown -->
+            <div class="form-group select-group">
+                <label>What do you want to calculate?</label>
+                <div class="custom-select-wrapper">
+                    <div class="custom-select">
+                        <div class="custom-select-trigger">
+                            <span>-- Select a parameter to solve for --</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
+                            <span class="custom-option" data-value="finalVelocity">Final Velocity (v)</span>
+                            <span class="custom-option" data-value="initialVelocity">Initial Velocity (u)</span>
+                            <span class="custom-option" data-value="acceleration">Acceleration (a)</span>
+                            <span class="custom-option" data-value="time">Time (t)</span>
+                            <span class="custom-option" data-value="displacement">Displacement (s)</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hidden input to store the actual value for the JS calculation logic -->
+                <input type="hidden" id="option" value="">
             </div>
-            <div class="form-group">
-                <label for="acceleration">Acceleration (m/s²)</label>
-                <input type="number" id="acceleration" placeholder="Rate of change of velocity [m/s²]">
-            </div>
-            <div class="form-group">
-                <label for="time">Time (s)</label>
-                <input type="number" id="time" placeholder="Duration of motion [s]">
-            </div>
-            <div class="form-group">
-                <label for="displacement">Displacement (m)</label>
-                <input type="number" id="displacement" placeholder="Distance traveled [m]">
-            </div>
-            <div class="form-group">
-                <label for="option">Calculate:</label>
-                <select id="option">
-                    <option value="">Select an option</option>
-                    <option value="finalVelocity">Final Velocity</option>
-                    <option value="initialVelocity">Initial Velocity</option>
-                    <option value="acceleration">Acceleration</option>
-                    <option value="time">Time</option>
-                    <option value="displacement">Displacement</option>
-                </select>
-            </div>
-            <button type="button" id="calculateButton">Calculate</button>
+
+            <button type="button" id="calculateButton">Calculate Now</button>
         </form>
-        <p>Created and Owned by NH Prince</p>
+        
+        <div class="footer">
+            <p>Created and Owned by <span>NH Prince</span></p>
+        </div>
     </div>
+
+    <!-- Custom Modal Popup -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="modal-icon" id="modalIcon">🎯</div>
+            <h2 id="modalTitle">Calculation Result</h2>
+            <p id="modalMessage">Your result will appear here.</p>
+            <button class="close-btn" id="closeModal">Awesome!</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
