@@ -1,84 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motion Master | Physics Calculator</title>
-    <!-- Modern Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Master — Advanced Motion Calculator</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🚀 Motion Master</h1>
-            <p>Calculate motion parameters effortlessly</p>
+  <div class="app">
+    <aside class="rail" id="rail">
+      <div class="brand">
+        <div class="brand-left">
+          <div class="brand-mark" id="brandMark"></div>
+          <div class="brand-text">
+            <h1>Motion Master</h1>
+            <p id="brandTagline">Advanced kinematics, solved.</p>
+          </div>
         </div>
-        
-        <form id="motionForm">
-            <div class="input-grid">
-                <div class="form-group">
-                    <label for="initialVelocity">Initial Velocity (m/s)</label>
-                    <input type="number" id="initialVelocity" step="any" placeholder="Start velocity [m/s]">
-                </div>
-                <div class="form-group">
-                    <label for="finalVelocity">Final Velocity (m/s)</label>
-                    <input type="number" id="finalVelocity" step="any" placeholder="End velocity [m/s]">
-                </div>
-                <div class="form-group">
-                    <label for="acceleration">Acceleration (m/s²)</label>
-                    <input type="number" id="acceleration" step="any" placeholder="Rate of change [m/s²]">
-                </div>
-                <div class="form-group">
-                    <label for="time">Time (s)</label>
-                    <input type="number" id="time" step="any" placeholder="Duration [s]">
-                </div>
-                <div class="form-group full-width">
-                    <label for="displacement">Displacement (m)</label>
-                    <input type="number" id="displacement" step="any" placeholder="Distance traveled [m]">
-                </div>
+        <button class="collapse-btn" id="collapseBtn" title="Toggle sidebar" aria-label="Toggle sidebar"></button>
+      </div>
+
+      <nav class="topics" id="topicNav"></nav>
+
+      <div class="rail-controls">
+        <div class="mode-toggle" role="group" aria-label="Calculation mode">
+          <button class="mode-btn active" data-mode="quick">
+            <span class="mode-icon">⚡</span><span class="mode-label">Quick</span>
+          </button>
+          <button class="mode-btn" data-mode="learn">
+            <span class="mode-icon">◎</span><span class="mode-label">Learn</span>
+          </button>
+        </div>
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="bn">বাং</button>
+        </div>
+      </div>
+      <p class="mode-hint" id="modeHint">Quick gives you the number. Learn shows the working, the graph, and the motion itself.</p>
+    </aside>
+
+    <main class="workspace">
+      <div class="workspace-inner">
+        <header class="module-header">
+          <h2 id="moduleTitle">—</h2>
+          <p id="moduleDesc">—</p>
+        </header>
+
+        <section class="panel">
+          <div class="extra-toggle" id="extraToggleWrap" hidden></div>
+          <div class="field-grid" id="fieldGrid"></div>
+          <div class="solve-row">
+            <div class="solve-select">
+              <label id="solveLabel">Solve for</label>
+              <div class="dropdown" id="solveDropdown"></div>
             </div>
+            <button id="calcBtn">Calculate</button>
+          </div>
+        </section>
 
-            <!-- Custom Styled Dropdown -->
-            <div class="form-group select-group">
-                <label>What do you want to calculate?</label>
-                <div class="custom-select-wrapper">
-                    <div class="custom-select">
-                        <div class="custom-select-trigger">
-                            <span>-- Select a parameter to solve for --</span>
-                            <div class="arrow"></div>
-                        </div>
-                        <div class="custom-options">
-                            <span class="custom-option" data-value="finalVelocity">Final Velocity (v)</span>
-                            <span class="custom-option" data-value="initialVelocity">Initial Velocity (u)</span>
-                            <span class="custom-option" data-value="acceleration">Acceleration (a)</span>
-                            <span class="custom-option" data-value="time">Time (t)</span>
-                            <span class="custom-option" data-value="displacement">Displacement (s)</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Hidden input to store the actual value for the JS calculation logic -->
-                <input type="hidden" id="option" value="">
-            </div>
+        <section class="panel results-panel" id="resultsPanel" hidden>
+          <div id="readout"></div>
+          <div class="learn-extra" id="learnExtra" hidden>
+            <div id="steps" class="steps"></div>
+            <div id="visual" class="visual"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
 
-            <button type="button" id="calculateButton">Calculate Now</button>
-        </form>
-        
-        <div class="footer">
-            <p>Created and Owned by <span>NH Prince</span></p>
-        </div>
-    </div>
-
-    <!-- Custom Modal Popup -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <div class="modal-icon" id="modalIcon">🎯</div>
-            <h2 id="modalTitle">Calculation Result</h2>
-            <p id="modalMessage">Your result will appear here.</p>
-            <button class="close-btn" id="closeModal">Awesome!</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

@@ -1,109 +1,76 @@
-<h1 align="center">🚀 MotionMaster</h1>
+<h1 align="center">🚀 Motion Master</h1>
 
 <p align="center">
-  <b>A powerful motion calculator that makes physics easy!</b><br>
-  <i>Calculate and visualize motion parameters effortlessly.</i>
-</p>
-
-<p align="center">
-  <a href="https://nhprince.github.io/MotionMaster/"><img src="https://img.shields.io/badge/Live%20Demo-Online-green?style=for-the-badge"></a>
-  <img src="https://img.shields.io/github/license/nhprince/MotionMaster?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/nhprince/MotionMaster?style=for-the-badge">
+  <b>An advanced motion physics calculator — from SSC-level SUVAT to college-level mechanics.</b>
 </p>
 
 ---
 
-## 🚀 **Live Demo**
-🔗 **[MotionMaster - GitHub Pages](https://nhprince.github.io/MotionMaster/)** *(Try it out!)*  
+## What's here
 
----
+All seven planned topics are built, each with the same English/Bengali toggle and Quick/Learn modes:
 
-## 📚 **Features**
-✔️ **Comprehensive Calculations** – Solve for displacement, velocity, acceleration, and time  
-✔️ **Interactive Visualizations** – Dynamic graphs & animations bring motion to life  
-✔️ **User-Friendly Interface** – Clean, modern, and responsive design  
-✔️ **Educational Resources** – Built-in formulas & explanations for easy learning  
-✔️ **No Installation Required** – Just open the website & start calculating  
+- **Kinematics (SUVAT)** — no longer assumes blank fields are `0`. Tries every valid formula combination for the variable you're solving for, then back-solves the rest of the system. v–t and s–t graphs.
+- **Projectile Motion** (প্রাসের গতি) — full 2D breakdown, launch height support, animated trajectory.
+- **Circular Motion** — give any consistent subset of radius/speed/angular velocity/period/frequency/mass; derives the rest with a shown reasoning chain. Orbit animation.
+- **SHM & Oscillations** (সরল ছন্দিত গতি) — solve from ω, T, f, a spring's (k, m), or a pendulum's (L, g); evaluate displacement/velocity/acceleration at any instant. Displacement/velocity graphs plus a live oscillation animation.
+- **Work, Energy & Momentum** — work, kinetic/potential energy, momentum, power, *and* 1D elastic/inelastic collisions (shows momentum and kinetic-energy conservation checks so you can see elastic vs. inelastic play out numerically).
+- **Relative Motion** — relative velocity of A with respect to B in 2D, with a vector diagram.
+- **Variable Acceleration** — the advanced one: type an actual function of `t` (e.g. `3*t^2 + 2*t`, `10*sin(2*t)`) as acceleration, velocity, *or* position, and it numerically integrates/differentiates to get the other two, with graphs. Runs on a small hand-written expression parser (no `eval`, no dependencies) plus trapezoidal integration and central-difference derivatives.
+- **Quick vs. Learn mode** — Quick shows just the number; Learn shows the derivation, graphs, and any animation.
+- **English ⇄ Bengali toggle** — every label, unit, and step-by-step explanation switches language. Terms were checked against Bengali-medium physics sources rather than translated literally (e.g. প্রাস for projectile, ভরবেগের নিত্যতা for momentum conservation, স্থিতিস্থাপক/অস্থিতিস্থাপক সংঘর্ষ for elastic/inelastic collisions).
+- **Collapsible sidebar** with icon-only mode, a proper brand mark + favicon, and icon-based (not letter-badge) dropdowns throughout.
+- **Design** — light, minimal, mostly monochrome; one blue accent reserved for "this is the answer" — the primary result, the highlighted row, the solved-for graph line, and any moving marker.
 
----
+## Project structure
 
-## 🛠️ **Installation (For Developers)**
-### 📂 **Clone the Repository**
-```bash
-git clone https://github.com/nhprince/MotionMaster.git  
-cd MotionMaster
 ```
-🔥 Run it Locally
+index.html
+style.css
+js/
+  app.js               # navigation, mode/language toggle, dynamic fields, custom dropdown
+  i18n.js              # static UI strings, unit translations
+  utils/
+    math.js            # parsing, formatting, quadratic solver
+    plot.js            # canvas graphs, trajectory/orbit/oscillation animation, vector diagrams
+    icons.js           # inline SVG icon set
+    calc.js            # safe expression parser + numerical integration/differentiation
+  modules/
+    kinematics.js
+    projectile.js
+    circular.js
+    shm.js
+    energy.js
+    relative.js
+    calculus.js
+```
 
-Open index.html in your browser.
+Zero build step, zero npm dependencies, only two Google Fonts loaded over HTTPS. Adding a new topic later just means dropping a new file in `js/modules/` with a `calculate()` function and registering it in `app.js`.
 
-Make sure JavaScript is enabled.
+## Run locally
 
+Because the app uses ES modules (`<script type="module">`), opening `index.html` directly via `file://` will fail (browsers block module imports over `file://`). Serve it locally instead:
 
+```bash
+# Python
+python3 -m http.server 8000
 
----
+# or Node
+npx serve .
+```
 
-🎯 How to Use
+Then visit `http://localhost:8000`.
 
-1. Visit the live demo
+## Deploy — Cloudflare Pages (free, fast, static)
 
+1. Push this repo to GitHub (keep using your existing `MotionMaster` repo).
+2. Go to the [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**.
+3. Select the `MotionMaster` repo.
+4. Build settings: **Framework preset: None**, **Build command: (leave blank)**, **Build output directory: `/`**.
+5. Deploy. Cloudflare gives you a `*.pages.dev` URL immediately, and you can attach a custom domain for free under the project's **Custom domains** tab.
 
-2. Enter known motion values in the input fields
-
-
-3. Select the missing parameter to calculate
-
-
-4. View results with real-time graphs & animations
-
-
-
-
----
-
-🤝 Contributing
-
-🛠 Want to Improve It?
-
-Fork the repo
-
-Create a new branch (git checkout -b feature-branch)
-
-Commit your changes (git commit -m 'Add new feature')
-
-Push to the branch (git push origin feature-branch)
-
-Open a Pull Request
-
-
-🐛 Found a Bug?
-
-Open an issue
-
-Describe the problem
-
-Wait for a fix (or fix it yourself!)
-
-
+Every future `git push` redeploys automatically. GitHub Pages can stay live in parallel if you want — nothing here is Pages-specific.
 
 ---
 
-⭐ Show Your Support
-
-If you like this project, drop a star ⭐ on GitHub!
-
-
----
-
-📜 License
-
-This project is licensed under the MIT License – Use freely but give credit!
-
-
----
-
-<p align="center">
-  Developed with ❤️ by <b>NH Prince Pradhan</b>
-</p>
-🚀
-
+<p align="center">Developed with ❤️ by <b>NH Prince Pradhan</b></p>
